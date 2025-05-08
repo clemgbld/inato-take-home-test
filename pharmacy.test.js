@@ -106,4 +106,10 @@ describe("Pharmacy", () => {
       ).toEqual([new Drug("Fervex", nextExpiresIn, 6)]);
     },
   );
+
+  it("should drop benefit to 0 when expired", () => {
+    expect(
+      new Pharmacy([new Drug("Fervex", 0, 49)]).updateBenefitValue(),
+    ).toEqual([new Drug("Fervex", -1, 0)]);
+  });
 });
