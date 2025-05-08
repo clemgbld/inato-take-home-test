@@ -112,4 +112,10 @@ describe("Pharmacy", () => {
       new Pharmacy([new Drug("Fervex", 0, 49)]).updateBenefitValue(),
     ).toEqual([new Drug("Fervex", -1, 0)]);
   });
+
+  it("should never increase the benefit above 50", () => {
+    expect(
+      new Pharmacy([new Drug("Fervex", 5, 50)]).updateBenefitValue(),
+    ).toEqual([new Drug("Fervex", 4, 50)]);
+  });
 });
