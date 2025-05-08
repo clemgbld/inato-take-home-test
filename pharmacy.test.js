@@ -164,9 +164,9 @@ describe("Pharmacy", () => {
       (initialExpiresIn, nextExpiresIn) => {
         expect(
           new Pharmacy([
-            new Drug(DRUG_NAMES.DAFALGAN, initialExpiresIn, 3),
+            new Drug(DRUG_NAMES.DAFALGAN, initialExpiresIn, 5),
           ]).updateBenefitValue(),
-        ).toEqual([new Drug(DRUG_NAMES.DAFALGAN, nextExpiresIn, 0)]);
+        ).toEqual([new Drug(DRUG_NAMES.DAFALGAN, nextExpiresIn, 1)]);
       },
     );
 

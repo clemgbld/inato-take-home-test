@@ -77,7 +77,7 @@ class DafalganTemplate extends DrugTemplate {
 
   _updateBenefitWhenExpired() {
     if (this.benefit > this.MINIUMUM_BENEFIT) {
-      this.benefit = this.benefit - 1;
+      this.benefit = this.benefit - 2;
     }
   }
 }
