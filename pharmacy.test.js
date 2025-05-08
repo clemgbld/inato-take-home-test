@@ -12,4 +12,10 @@ describe("Pharmacy", () => {
       [new Drug("test", -1, 1)],
     );
   });
+
+  it("should never decrase the benefit below 0", () => {
+    expect(new Pharmacy([new Drug("test", 2, 0)]).updateBenefitValue()).toEqual(
+      [new Drug("test", 1, 0)],
+    );
+  });
 });
