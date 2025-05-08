@@ -68,8 +68,8 @@ describe("Pharmacy", () => {
   describe("Fervex drug", () => {
     it("should increase in benefit the older it gets", () => {
       expect(
-        new Pharmacy([new Drug("Fervex", 12, 3)]).updateBenefitValue(),
-      ).toEqual([new Drug("Fervex", 11, 4)]);
+        new Pharmacy([new Drug("Fervex", 11, 3)]).updateBenefitValue(),
+      ).toEqual([new Drug("Fervex", 10, 4)]);
     });
 
     it.each([
