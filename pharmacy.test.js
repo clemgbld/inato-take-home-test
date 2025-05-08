@@ -133,6 +133,14 @@ describe("Pharmacy", () => {
         ]).updateBenefitValue(),
       ).toEqual([new Drug(DRUG_NAMES.DAFALGAN, 1, 1)]);
     });
+
+    it("should never decrase the benefit below 0", () => {
+      expect(
+        new Pharmacy([
+          new Drug(DRUG_NAMES.DAFALGAN, 2, 0),
+        ]).updateBenefitValue(),
+      ).toEqual([new Drug(DRUG_NAMES.DAFALGAN, 1, 0)]);
+    });
   });
 
   it("should do nothing when there is no drug in the pharmacy", () => {
