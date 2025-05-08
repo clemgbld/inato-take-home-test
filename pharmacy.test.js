@@ -123,9 +123,23 @@ describe("Pharmacy", () => {
     expect(new Pharmacy().updateBenefitValue()).toEqual([]);
   });
 
-  it("should update the benefit of the drugs in the pharmacy across days", () => {
+  it("should update the benefit and expriresIn of the drugs in the pharmacy across days", () => {
     const pharmacy = new Pharmacy([new Drug("test", 2, 3)]);
     pharmacy.updateBenefitValue();
     expect(pharmacy.updateBenefitValue()).toEqual([new Drug("test", 0, 1)]);
+  });
+
+  it("should decrease the benefit and expiresIn of multiple drugs", () => {
+    expect(
+      new Pharmacy([
+        new Drug("test", 2, 3),
+        new Drug("Fervex", 0, 49),
+        new Drug("Magic Pill", 10, 12),
+      ]).updateBenefitValue(),
+    ).toEqual([
+      new Drug("test", 1, 2),
+      new Drug("Fervex", -1, 0),
+      new Drug("Magic Pill", 10, 12),
+    ]);
   });
 });
