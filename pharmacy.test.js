@@ -118,4 +118,8 @@ describe("Pharmacy", () => {
       new Pharmacy([new Drug("Fervex", 5, 50)]).updateBenefitValue(),
     ).toEqual([new Drug("Fervex", 4, 50)]);
   });
+
+  it("should do nothing when there is no drug in the pharmacy", () => {
+    expect(new Pharmacy().updateBenefitValue()).toEqual([]);
+  });
 });
