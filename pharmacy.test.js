@@ -122,4 +122,10 @@ describe("Pharmacy", () => {
   it("should do nothing when there is no drug in the pharmacy", () => {
     expect(new Pharmacy().updateBenefitValue()).toEqual([]);
   });
+
+  it("should update the benefit of the drugs in the pharmacy across days", () => {
+    const pharmacy = new Pharmacy([new Drug("test", 2, 3)]);
+    pharmacy.updateBenefitValue();
+    expect(pharmacy.updateBenefitValue()).toEqual([new Drug("test", 0, 1)]);
+  });
 });
