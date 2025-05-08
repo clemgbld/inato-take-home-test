@@ -1,4 +1,5 @@
 import { Drug, Pharmacy } from "./pharmacy";
+import { DRUG_NAMES } from "./drugs-template";
 
 describe("Pharmacy", () => {
   describe("Standard drugs", () => {
@@ -32,8 +33,10 @@ describe("Pharmacy", () => {
   describe("Herbal Tea drug", () => {
     it("should increase in benefit the older it gets", () => {
       expect(
-        new Pharmacy([new Drug("Herbal Tea", 2, 3)]).updateBenefitValue(),
-      ).toEqual([new Drug("Herbal Tea", 1, 4)]);
+        new Pharmacy([
+          new Drug(DRUG_NAMES.HERBAL_TEA, 2, 3),
+        ]).updateBenefitValue(),
+      ).toEqual([new Drug(DRUG_NAMES.HERBAL_TEA, 1, 4)]);
     });
 
     it.each([
@@ -44,32 +47,36 @@ describe("Pharmacy", () => {
       (initialExpiresIn, nextExpiresIn) => {
         expect(
           new Pharmacy([
-            new Drug("Herbal Tea", initialExpiresIn, 3),
+            new Drug(DRUG_NAMES.HERBAL_TEA, initialExpiresIn, 3),
           ]).updateBenefitValue(),
-        ).toEqual([new Drug("Herbal Tea", nextExpiresIn, 5)]);
+        ).toEqual([new Drug(DRUG_NAMES.HERBAL_TEA, nextExpiresIn, 5)]);
       },
     );
 
     it("should never increase the benefit above 50", () => {
       expect(
-        new Pharmacy([new Drug("Herbal Tea", 4, 50)]).updateBenefitValue(),
-      ).toEqual([new Drug("Herbal Tea", 3, 50)]);
+        new Pharmacy([
+          new Drug(DRUG_NAMES.HERBAL_TEA, 4, 50),
+        ]).updateBenefitValue(),
+      ).toEqual([new Drug(DRUG_NAMES.HERBAL_TEA, 3, 50)]);
     });
   });
 
   describe("Magic Pill drug", () => {
     it("should never expire nor decrease in benefit", () => {
       expect(
-        new Pharmacy([new Drug("Magic Pill", 10, 12)]).updateBenefitValue(),
-      ).toEqual([new Drug("Magic Pill", 10, 12)]);
+        new Pharmacy([
+          new Drug(DRUG_NAMES.MAGIC_PILL, 10, 12),
+        ]).updateBenefitValue(),
+      ).toEqual([new Drug(DRUG_NAMES.MAGIC_PILL, 10, 12)]);
     });
   });
 
   describe("Fervex drug", () => {
     it("should increase in benefit the older it gets", () => {
       expect(
-        new Pharmacy([new Drug("Fervex", 11, 3)]).updateBenefitValue(),
-      ).toEqual([new Drug("Fervex", 10, 4)]);
+        new Pharmacy([new Drug(DRUG_NAMES.FERVEX, 11, 3)]).updateBenefitValue(),
+      ).toEqual([new Drug(DRUG_NAMES.FERVEX, 10, 4)]);
     });
 
     it.each([
@@ -83,9 +90,9 @@ describe("Pharmacy", () => {
       (initialExpiresIn, nextExpiresIn) => {
         expect(
           new Pharmacy([
-            new Drug("Fervex", initialExpiresIn, 3),
+            new Drug(DRUG_NAMES.FERVEX, initialExpiresIn, 3),
           ]).updateBenefitValue(),
-        ).toEqual([new Drug("Fervex", nextExpiresIn, 5)]);
+        ).toEqual([new Drug(DRUG_NAMES.FERVEX, nextExpiresIn, 5)]);
       },
     );
   });
@@ -101,22 +108,22 @@ describe("Pharmacy", () => {
     (initialExpiresIn, nextExpiresIn) => {
       expect(
         new Pharmacy([
-          new Drug("Fervex", initialExpiresIn, 3),
+          new Drug(DRUG_NAMES.FERVEX, initialExpiresIn, 3),
         ]).updateBenefitValue(),
-      ).toEqual([new Drug("Fervex", nextExpiresIn, 6)]);
+      ).toEqual([new Drug(DRUG_NAMES.FERVEX, nextExpiresIn, 6)]);
     },
   );
 
   it("should drop benefit to 0 when expired", () => {
     expect(
-      new Pharmacy([new Drug("Fervex", 0, 49)]).updateBenefitValue(),
-    ).toEqual([new Drug("Fervex", -1, 0)]);
+      new Pharmacy([new Drug(DRUG_NAMES.FERVEX, 0, 49)]).updateBenefitValue(),
+    ).toEqual([new Drug(DRUG_NAMES.FERVEX, -1, 0)]);
   });
 
   it("should never increase the benefit above 50", () => {
     expect(
-      new Pharmacy([new Drug("Fervex", 5, 50)]).updateBenefitValue(),
-    ).toEqual([new Drug("Fervex", 4, 50)]);
+      new Pharmacy([new Drug(DRUG_NAMES.FERVEX, 5, 50)]).updateBenefitValue(),
+    ).toEqual([new Drug(DRUG_NAMES.FERVEX, 4, 50)]);
   });
 
   it("should do nothing when there is no drug in the pharmacy", () => {
@@ -133,13 +140,13 @@ describe("Pharmacy", () => {
     expect(
       new Pharmacy([
         new Drug("test", 2, 3),
-        new Drug("Fervex", 0, 49),
-        new Drug("Magic Pill", 10, 12),
+        new Drug(DRUG_NAMES.FERVEX, 0, 49),
+        new Drug(DRUG_NAMES.MAGIC_PILL, 10, 12),
       ]).updateBenefitValue(),
     ).toEqual([
       new Drug("test", 1, 2),
-      new Drug("Fervex", -1, 0),
-      new Drug("Magic Pill", 10, 12),
+      new Drug(DRUG_NAMES.FERVEX, -1, 0),
+      new Drug(DRUG_NAMES.MAGIC_PILL, 10, 12),
     ]);
   });
 });
