@@ -62,10 +62,17 @@ class FervexTemplate extends DrugTemplate {
   }
 }
 
+class DafalganTemplate extends DrugTemplate {
+  updateBenefit() {
+    this.benefit = this.benefit - 2;
+  }
+}
+
 export const DRUG_NAMES = {
   MAGIC_PILL: "Magic Pill",
   FERVEX: "Fervex",
   HERBAL_TEA: "Herbal Tea",
+  DAFALGAN: "Dafalgan",
 };
 
 export class DrugTemplateFactory {
@@ -73,6 +80,7 @@ export class DrugTemplateFactory {
     [DRUG_NAMES.MAGIC_PILL, MagicPillTemplate],
     [DRUG_NAMES.FERVEX, FervexTemplate],
     [DRUG_NAMES.HERBAL_TEA, HerbalTeaTemplate],
+    [DRUG_NAMES.DAFALGAN, DafalganTemplate],
   ]);
 
   static create(name, expiresIn, benefit) {

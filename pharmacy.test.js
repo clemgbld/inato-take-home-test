@@ -95,35 +95,44 @@ describe("Pharmacy", () => {
         ).toEqual([new Drug(DRUG_NAMES.FERVEX, nextExpiresIn, 5)]);
       },
     );
+    it.each([
+      [5, 4],
+      [4, 3],
+      [3, 2],
+      [2, 1],
+      [1, 0],
+    ])(
+      "should increase in benefit thrice as fast when there are 5 days or less",
+      (initialExpiresIn, nextExpiresIn) => {
+        expect(
+          new Pharmacy([
+            new Drug(DRUG_NAMES.FERVEX, initialExpiresIn, 3),
+          ]).updateBenefitValue(),
+        ).toEqual([new Drug(DRUG_NAMES.FERVEX, nextExpiresIn, 6)]);
+      },
+    );
+
+    it("should drop benefit to 0 when expired", () => {
+      expect(
+        new Pharmacy([new Drug(DRUG_NAMES.FERVEX, 0, 49)]).updateBenefitValue(),
+      ).toEqual([new Drug(DRUG_NAMES.FERVEX, -1, 0)]);
+    });
+
+    it("should never increase the benefit above 50", () => {
+      expect(
+        new Pharmacy([new Drug(DRUG_NAMES.FERVEX, 5, 50)]).updateBenefitValue(),
+      ).toEqual([new Drug(DRUG_NAMES.FERVEX, 4, 50)]);
+    });
   });
 
-  it.each([
-    [5, 4],
-    [4, 3],
-    [3, 2],
-    [2, 1],
-    [1, 0],
-  ])(
-    "should increase in benefit thrice as fast when there are 5 days or less",
-    (initialExpiresIn, nextExpiresIn) => {
+  describe("Dafalgan drug", () => {
+    it("should decrease in benefit twice as fast as normal drugs", () => {
       expect(
         new Pharmacy([
-          new Drug(DRUG_NAMES.FERVEX, initialExpiresIn, 3),
+          new Drug(DRUG_NAMES.DAFALGAN, 2, 3),
         ]).updateBenefitValue(),
-      ).toEqual([new Drug(DRUG_NAMES.FERVEX, nextExpiresIn, 6)]);
-    },
-  );
-
-  it("should drop benefit to 0 when expired", () => {
-    expect(
-      new Pharmacy([new Drug(DRUG_NAMES.FERVEX, 0, 49)]).updateBenefitValue(),
-    ).toEqual([new Drug(DRUG_NAMES.FERVEX, -1, 0)]);
-  });
-
-  it("should never increase the benefit above 50", () => {
-    expect(
-      new Pharmacy([new Drug(DRUG_NAMES.FERVEX, 5, 50)]).updateBenefitValue(),
-    ).toEqual([new Drug(DRUG_NAMES.FERVEX, 4, 50)]);
+      ).toEqual([new Drug(DRUG_NAMES.DAFALGAN, 1, 1)]);
+    });
   });
 
   it("should do nothing when there is no drug in the pharmacy", () => {
