@@ -66,6 +66,14 @@ describe("Pharmacy", () => {
         ]).updateBenefitValue(),
       ).toEqual([new Drug(DRUG_NAMES.HERBAL_TEA, 3, 50)]);
     });
+
+    it("should never increase the benefit above 50 when expired", () => {
+      expect(
+        new Pharmacy([
+          new Drug(DRUG_NAMES.HERBAL_TEA, -1, 50),
+        ]).updateBenefitValue(),
+      ).toEqual([new Drug(DRUG_NAMES.HERBAL_TEA, -2, 50)]);
+    });
   });
 
   describe("Magic Pill drug", () => {

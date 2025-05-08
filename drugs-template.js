@@ -26,7 +26,9 @@ class DrugTemplate {
   }
 
   _updateBenefitWhenExpired() {
-    this.benefit = this.benefit - 1;
+    if (this.benefit > this.MINIUMUM_BENEFIT) {
+      this.benefit = this.benefit - 1;
+    }
   }
 
   _updateBenefit() {
@@ -36,7 +38,9 @@ class DrugTemplate {
 
 class HerbalTeaTemplate extends DrugTemplate {
   _updateBenefitWhenExpired() {
-    this.benefit = this.benefit + 1;
+    if (this.benefit < this.MAXIMUM_BENEFIT) {
+      this.benefit = this.benefit + 1;
+    }
   }
 
   _updateBenefit() {
@@ -72,10 +76,7 @@ class DafalganTemplate extends DrugTemplate {
   }
 
   _updateBenefitWhenExpired() {
-    if (
-      this.benefit > this.MINIUMUM_BENEFIT &&
-      this.benefit < this.MAXIMUM_BENEFIT
-    ) {
+    if (this.benefit > this.MINIUMUM_BENEFIT) {
       this.benefit = this.benefit - 1;
     }
   }
