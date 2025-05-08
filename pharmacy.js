@@ -6,22 +6,32 @@ export class Drug {
   }
 
   updateDaily() {
-    let drug;
-    if (this.name == "Magic Pill") {
-      drug = new MagicPillTemplate(this.expiresIn, this.benefit);
-    } else if (this.name == "Fervex") {
-      drug = new FervexTemplate(this.expiresIn, this.benefit);
-    } else if (this.name == "Herbal Tea") {
-      drug = new HerbalTeaTemplate(this.expiresIn, this.benefit);
-    } else {
-      drug = new DrugTemplate(this.expiresIn, this.benefit);
-    }
+    const drug = DrugTemplateFactory.create(
+      this.name,
+      this.expiresIn,
+      this.benefit,
+    );
     drug.updateExpiresIn();
     drug.updateBenefit();
     drug.updateBenefitWhenExpired();
 
     this.expiresIn = drug.expiresIn;
     this.benefit = drug.benefit;
+  }
+}
+
+class DrugTemplateFactory {
+  static create(name, expiresIn, benefit) {
+    if (name == "Magic Pill") {
+      return new MagicPillTemplate(expiresIn, benefit);
+    }
+    if (name == "Fervex") {
+      return new FervexTemplate(expiresIn, benefit);
+    }
+    if (name == "Herbal Tea") {
+      return new HerbalTeaTemplate(expiresIn, benefit);
+    }
+    return new DrugTemplate(expiresIn, benefit);
   }
 }
 
@@ -94,9 +104,9 @@ export class Pharmacy {
     this.drugs = drugs;
   }
   updateBenefitValue() {
-    for (var i = 0; i < this.drugs.length; i++) {
-      this.drugs[i].updateDaily();
-    }
+    this.drugs.forEach((drug) => {
+      drug.updateDaily();
+    });
 
     return this.drugs;
   }
