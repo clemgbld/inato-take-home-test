@@ -4,45 +4,45 @@ class DrugTemplate {
   }
 
   updateDaily() {
-    this.updateExpiresIn();
-    this.updateBenefit();
+    this._updateExpiresIn();
+    this._updateBenefit();
     if (this.drug.isExpired()) {
-      this.updateBenefitWhenExpired();
+      this._updateBenefitWhenExpired();
     }
   }
 
-  updateExpiresIn() {
+  _updateExpiresIn() {
     this.drug.tick();
   }
-  updateBenefit() {
+  _updateBenefit() {
     this.drug.decreaseBenefit();
   }
 
-  updateBenefitWhenExpired() {
-    this.updateBenefit();
+  _updateBenefitWhenExpired() {
+    this._updateBenefit();
   }
 }
 
 class HerbalTeaTemplate extends DrugTemplate {
-  updateBenefit() {
+  _updateBenefit() {
     this.drug.increaseBenefit();
   }
 }
 
 class MagicPillTemplate extends DrugTemplate {
-  updateExpiresIn() {}
-  updateBenefit() {}
-  updateBenefitWhenExpired() {}
+  _updateExpiresIn() {}
+  _updateBenefit() {}
+  _updateBenefitWhenExpired() {}
 }
 
 class FervexTemplate extends DrugTemplate {
   TEN_DAYS = 10;
   FIVE_DAYS = 5;
-  updateBenefitWhenExpired() {
+  _updateBenefitWhenExpired() {
     this.drug.dropBenefit();
   }
 
-  updateBenefit() {
+  _updateBenefit() {
     this.drug.increaseBenefit();
     if (this.drug.willExpireInLessThan(this.TEN_DAYS)) {
       this.drug.increaseBenefit();
@@ -54,7 +54,7 @@ class FervexTemplate extends DrugTemplate {
 }
 
 class DafalganTemplate extends DrugTemplate {
-  updateBenefit() {
+  _updateBenefit() {
     this.drug.decreaseBenefit();
     this.drug.decreaseBenefit();
   }
