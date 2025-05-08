@@ -71,5 +71,22 @@ describe("Pharmacy", () => {
         new Pharmacy([new Drug("Fervex", 12, 3)]).updateBenefitValue(),
       ).toEqual([new Drug("Fervex", 11, 4)]);
     });
+
+    it.each([
+      [10, 9],
+      [9, 8],
+      [8, 7],
+      [7, 6],
+      [6, 5],
+    ])(
+      "should increase in benefit twice as fast when there are 10 days or less",
+      (initialExpiresIn, nextExpiresIn) => {
+        expect(
+          new Pharmacy([
+            new Drug("Fervex", initialExpiresIn, 3),
+          ]).updateBenefitValue(),
+        ).toEqual([new Drug("Fervex", nextExpiresIn, 5)]);
+      },
+    );
   });
 });
