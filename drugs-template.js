@@ -1,5 +1,5 @@
 class DrugTemplate {
-  MINIUMUM_BENEFIT = 0;
+  MINIMUM_BENEFIT = 0;
   MAXIMUM_BENEFIT = 50;
   EXPIRED = 0;
   constructor(expiresIn, benefit) {
@@ -12,7 +12,7 @@ class DrugTemplate {
   }
   updateBenefit() {
     if (
-      this.benefit > this.MINIUMUM_BENEFIT &&
+      this.benefit > this.MINIMUM_BENEFIT &&
       this.benefit < this.MAXIMUM_BENEFIT
     ) {
       this._updateBenefit();
