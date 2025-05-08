@@ -42,8 +42,12 @@ class DrugTemplate {
 
   updateBenefitWhenExpired() {
     if (this.expiresIn < 0) {
-      this.benefit = this.benefit - 1;
+      this._updateBenefitWhenExpired();
     }
+  }
+
+  _updateBenefitWhenExpired() {
+    this.benefit = this.benefit - 1;
   }
 }
 
@@ -54,10 +58,8 @@ class HerbalTeaTemplate extends DrugTemplate {
     }
   }
 
-  updateBenefitWhenExpired() {
-    if (this.expiresIn < 0) {
-      this.benefit = this.benefit + 1;
-    }
+  _updateBenefitWhenExpired() {
+    this.benefit = this.benefit + 1;
   }
 }
 
@@ -79,10 +81,8 @@ class FervexTemplate extends DrugTemplate {
     }
   }
 
-  updateBenefitWhenExpired() {
-    if (this.expiresIn < 0) {
-      this.benefit = 0;
-    }
+  _updateBenefitWhenExpired() {
+    this.benefit = 0;
   }
 }
 
