@@ -6,6 +6,11 @@ export class Drug {
   }
 
   updateDaily() {
+    if (this.name === "Herbal Tea") {
+      if (this.benefit < 50) {
+        this.benefit = this.benefit + 1;
+      }
+    }
     if (this.name != "Herbal Tea" && this.name != "Fervex") {
       if (this.benefit > 0) {
         if (this.name != "Magic Pill") {
@@ -14,8 +19,8 @@ export class Drug {
       }
     } else {
       if (this.benefit < 50) {
-        this.benefit = this.benefit + 1;
         if (this.name == "Fervex") {
+          this.benefit = this.benefit + 1;
           if (this.expiresIn < 11) {
             if (this.benefit < 50) {
               this.benefit = this.benefit + 1;
