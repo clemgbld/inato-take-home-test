@@ -6,4 +6,10 @@ describe("Pharmacy", () => {
       [new Drug("test", 1, 2)],
     );
   });
+
+  it("should decrease the benefit twice as fast when expired", () => {
+    expect(new Pharmacy([new Drug("test", 0, 3)]).updateBenefitValue()).toEqual(
+      [new Drug("test", -1, 1)],
+    );
+  });
 });
