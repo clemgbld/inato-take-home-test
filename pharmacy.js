@@ -20,21 +20,6 @@ export class Drug {
   }
 }
 
-class DrugTemplateFactory {
-  static create(name, expiresIn, benefit) {
-    if (name == "Magic Pill") {
-      return new MagicPillTemplate(expiresIn, benefit);
-    }
-    if (name == "Fervex") {
-      return new FervexTemplate(expiresIn, benefit);
-    }
-    if (name == "Herbal Tea") {
-      return new HerbalTeaTemplate(expiresIn, benefit);
-    }
-    return new DrugTemplate(expiresIn, benefit);
-  }
-}
-
 class DrugTemplate {
   MINUMUM_BENEFIT = 0;
   MAXIMUM_BENEFIT = 50;
@@ -96,6 +81,19 @@ class FervexTemplate extends DrugTemplate {
 
   _updateBenefitWhenExpired() {
     this.benefit = 0;
+  }
+}
+
+class DrugTemplateFactory {
+  static registry = new Map([
+    ["Magic Pill", MagicPillTemplate],
+    ["Fervex", FervexTemplate],
+    ["Herbal Tea", HerbalTeaTemplate],
+  ]);
+
+  static create(name, expiresIn, benefit) {
+    const TemplateClass = this.registry.get(name) || DrugTemplate;
+    return new TemplateClass(expiresIn, benefit);
   }
 }
 
