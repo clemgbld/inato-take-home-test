@@ -8,11 +8,19 @@ describe("Pharmacy", () => {
       ).toEqual([new Drug("test", 1, 2)]);
     });
 
-    it("should decrease the benefit twice as fast when expired", () => {
-      expect(
-        new Pharmacy([new Drug("test", 0, 3)]).updateBenefitValue(),
-      ).toEqual([new Drug("test", -1, 1)]);
-    });
+    it.each([
+      [0, -1],
+      [-1, -2],
+    ])(
+      "should decrease the benefit twice as fast when expired",
+      (initialExpiresIn, nextExpiresIn) => {
+        expect(
+          new Pharmacy([
+            new Drug("test", initialExpiresIn, 3),
+          ]).updateBenefitValue(),
+        ).toEqual([new Drug("test", nextExpiresIn, 1)]);
+      },
+    );
 
     it("should never decrase the benefit below 0", () => {
       expect(
@@ -28,10 +36,18 @@ describe("Pharmacy", () => {
       ).toEqual([new Drug("Herbal Tea", 1, 4)]);
     });
 
-    it("should increase in benefit twice as fast when expired", () => {
-      expect(
-        new Pharmacy([new Drug("Herbal Tea", 0, 3)]).updateBenefitValue(),
-      ).toEqual([new Drug("Herbal Tea", -1, 5)]);
-    });
+    it.each([
+      [0, -1],
+      [-1, -2],
+    ])(
+      "should increase in benefit twice as fast when expired",
+      (initialExpiresIn, nextExpiresIn) => {
+        expect(
+          new Pharmacy([
+            new Drug("Herbal Tea", initialExpiresIn, 3),
+          ]).updateBenefitValue(),
+        ).toEqual([new Drug("Herbal Tea", nextExpiresIn, 5)]);
+      },
+    );
   });
 });
