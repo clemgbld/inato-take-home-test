@@ -12,18 +12,12 @@ export class Drug {
       }
     } else if (this.name === "Fervex") {
       if (this.benefit < 50) {
-        if (this.name == "Fervex") {
+        this.benefit = this.benefit + 1;
+        if (this.expiresIn < 11) {
           this.benefit = this.benefit + 1;
-          if (this.expiresIn < 11) {
-            if (this.benefit < 50) {
-              this.benefit = this.benefit + 1;
-            }
-          }
-          if (this.expiresIn < 6) {
-            if (this.benefit < 50) {
-              this.benefit = this.benefit + 1;
-            }
-          }
+        }
+        if (this.expiresIn < 6) {
+          this.benefit = this.benefit + 1;
         }
       }
     }
