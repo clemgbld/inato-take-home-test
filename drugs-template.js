@@ -11,8 +11,11 @@ class DrugTemplate {
     this.expiresIn = this.expiresIn - 1;
   }
   updateBenefit() {
-    if (this.benefit > this.MINIUMUM_BENEFIT) {
-      this.benefit = this.benefit - 1;
+    if (
+      this.benefit > this.MINIUMUM_BENEFIT &&
+      this.benefit < this.MAXIMUM_BENEFIT
+    ) {
+      this._updateBenefit();
     }
   }
 
@@ -25,16 +28,18 @@ class DrugTemplate {
   _updateBenefitWhenExpired() {
     this.benefit = this.benefit - 1;
   }
+
+  _updateBenefit() {
+    this.benefit = this.benefit - 1;
+  }
 }
 
 class HerbalTeaTemplate extends DrugTemplate {
-  updateBenefit() {
-    if (this.benefit < this.MAXIMUM_BENEFIT) {
-      this.benefit = this.benefit + 1;
-    }
+  _updateBenefitWhenExpired() {
+    this.benefit = this.benefit + 1;
   }
 
-  _updateBenefitWhenExpired() {
+  _updateBenefit() {
     this.benefit = this.benefit + 1;
   }
 }
@@ -46,8 +51,11 @@ class MagicPillTemplate extends DrugTemplate {
 }
 
 class FervexTemplate extends DrugTemplate {
-  updateBenefit() {
-    if (this.benefit === this.MAXIMUM_BENEFIT) return;
+  _updateBenefitWhenExpired() {
+    this.benefit = 0;
+  }
+
+  _updateBenefit() {
     this.benefit = this.benefit + 1;
     if (this.expiresIn < 10) {
       this.benefit = this.benefit + 1;
@@ -55,10 +63,6 @@ class FervexTemplate extends DrugTemplate {
     if (this.expiresIn < 5) {
       this.benefit = this.benefit + 1;
     }
-  }
-
-  _updateBenefitWhenExpired() {
-    this.benefit = 0;
   }
 }
 
