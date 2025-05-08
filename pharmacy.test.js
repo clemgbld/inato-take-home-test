@@ -141,6 +141,20 @@ describe("Pharmacy", () => {
         ]).updateBenefitValue(),
       ).toEqual([new Drug(DRUG_NAMES.DAFALGAN, 1, 0)]);
     });
+
+    it.each([
+      [0, -1],
+      [-1, -2],
+    ])(
+      "should decrease the benefit twice as fast when expired",
+      (initialExpiresIn, nextExpiresIn) => {
+        expect(
+          new Pharmacy([
+            new Drug(DRUG_NAMES.DAFALGAN, initialExpiresIn, 3),
+          ]).updateBenefitValue(),
+        ).toEqual([new Drug(DRUG_NAMES.DAFALGAN, nextExpiresIn, 0)]);
+      },
+    );
   });
 
   it("should do nothing when there is no drug in the pharmacy", () => {
