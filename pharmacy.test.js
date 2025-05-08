@@ -29,7 +29,7 @@ describe("Pharmacy", () => {
       ).toEqual([new Drug("test", 1, 0)]);
     });
 
-    it("should update the benefit when negative when expired", () => {
+    it("should decrease the benefit when below zero when expired", () => {
       expect(
         new Pharmacy([new Drug("test", -1, 0)]).updateBenefitValue(),
       ).toEqual([new Drug("test", -2, 0)]);
@@ -170,7 +170,7 @@ describe("Pharmacy", () => {
       },
     );
 
-    it("should update the benefit when negative when expired", () => {
+    it("should never decrease the benefit below 0 when expired", () => {
       expect(
         new Pharmacy([
           new Drug(DRUG_NAMES.DAFALGAN, -1, 0),

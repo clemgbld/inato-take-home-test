@@ -1,5 +1,9 @@
 import { DrugTemplateFactory } from "./drugs-template";
 
+const MAXIMUM_BENEFIT = 50;
+const MINIMUM_BENEFIT = 0;
+const EXPIRED = 0;
+
 export class Drug {
   constructor(name, expiresIn, benefit) {
     this.name = name;
@@ -7,18 +11,31 @@ export class Drug {
     this.benefit = benefit;
   }
 
-  updateDaily() {
-    const drug = DrugTemplateFactory.create(
-      this.name,
-      this.expiresIn,
-      this.benefit,
-    );
-    drug.updateExpiresIn();
-    drug.updateBenefit();
-    drug.updateBenefitWhenExpired();
+  tick() {
+    this.expiresIn = this.expiresIn - 1;
+  }
 
-    this.expiresIn = drug.expiresIn;
-    this.benefit = drug.benefit;
+  increaseBenefit() {
+    if (this.benefit < MAXIMUM_BENEFIT) {
+      this.benefit = this.benefit + 1;
+    }
+  }
+  decreaseBenefit() {
+    if (this.benefit > MINIMUM_BENEFIT) {
+      this.benefit = this.benefit - 1;
+    }
+  }
+
+  dropBenefit() {
+    this.benefit = MINIMUM_BENEFIT;
+  }
+
+  isExpired() {
+    return this.expiresIn < EXPIRED;
+  }
+
+  willExpireInLessThan(days) {
+    return this.expiresIn < days;
   }
 }
 
@@ -28,7 +45,8 @@ export class Pharmacy {
   }
   updateBenefitValue() {
     this.drugs.forEach((drug) => {
-      drug.updateDaily();
+      const drugTemplate = DrugTemplateFactory.create(drug);
+      drugTemplate.updateDaily();
     });
 
     return this.drugs;

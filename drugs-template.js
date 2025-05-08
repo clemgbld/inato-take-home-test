@@ -1,38 +1,31 @@
 class DrugTemplate {
-  MINIMUM_BENEFIT = 0;
-  MAXIMUM_BENEFIT = 50;
-  EXPIRED = 0;
-  constructor(expiresIn, benefit) {
-    this.expiresIn = expiresIn;
-    this.benefit = benefit;
+  constructor(drug) {
+    this.drug = drug;
+  }
+
+  updateDaily() {
+    this.updateExpiresIn();
+    this.updateBenefit();
+    if (this.drug.isExpired()) {
+      this.updateBenefitWhenExpired();
+    }
   }
 
   updateExpiresIn() {
-    this.expiresIn = this.expiresIn - 1;
+    this.drug.tick();
   }
   updateBenefit() {
-    if (
-      this.benefit > this.MINIMUM_BENEFIT &&
-      this.benefit < this.MAXIMUM_BENEFIT
-    ) {
-      this._updateBenefit();
-    }
+    this.drug.decreaseBenefit();
   }
 
   updateBenefitWhenExpired() {
-    if (this.expiresIn < this.EXPIRED) {
-      this.updateBenefit();
-    }
-  }
-
-  _updateBenefit() {
-    this.benefit = this.benefit - 1;
+    this.updateBenefit();
   }
 }
 
 class HerbalTeaTemplate extends DrugTemplate {
-  _updateBenefit() {
-    this.benefit = this.benefit + 1;
+  updateBenefit() {
+    this.drug.increaseBenefit();
   }
 }
 
@@ -43,26 +36,27 @@ class MagicPillTemplate extends DrugTemplate {
 }
 
 class FervexTemplate extends DrugTemplate {
+  TEN_DAYS = 10;
+  FIVE_DAYS = 5;
   updateBenefitWhenExpired() {
-    if (this.expiresIn < this.EXPIRED) {
-      this.benefit = 0;
-    }
+    this.drug.dropBenefit();
   }
 
-  _updateBenefit() {
-    this.benefit = this.benefit + 1;
-    if (this.expiresIn < 10) {
-      this.benefit = this.benefit + 1;
+  updateBenefit() {
+    this.drug.increaseBenefit();
+    if (this.drug.willExpireInLessThan(this.TEN_DAYS)) {
+      this.drug.increaseBenefit();
     }
-    if (this.expiresIn < 5) {
-      this.benefit = this.benefit + 1;
+    if (this.drug.willExpireInLessThan(this.FIVE_DAYS)) {
+      this.drug.increaseBenefit();
     }
   }
 }
 
 class DafalganTemplate extends DrugTemplate {
-  _updateBenefit() {
-    this.benefit = this.benefit - 2;
+  updateBenefit() {
+    this.drug.decreaseBenefit();
+    this.drug.decreaseBenefit();
   }
 }
 
@@ -81,8 +75,8 @@ export class DrugTemplateFactory {
     [DRUG_NAMES.DAFALGAN, DafalganTemplate],
   ]);
 
-  static create(name, expiresIn, benefit) {
-    const TemplateClass = this.registry.get(name) || DrugTemplate;
-    return new TemplateClass(expiresIn, benefit);
+  static create(drug) {
+    const TemplateClass = this.registry.get(drug.name) || DrugTemplate;
+    return new TemplateClass(drug);
   }
 }
