@@ -28,6 +28,12 @@ describe("Pharmacy", () => {
         new Pharmacy([new Drug("test", 2, 0)]).updateBenefitValue(),
       ).toEqual([new Drug("test", 1, 0)]);
     });
+
+    it("should update the benefit when negative when expired", () => {
+      expect(
+        new Pharmacy([new Drug("test", -1, 0)]).updateBenefitValue(),
+      ).toEqual([new Drug("test", -2, 0)]);
+    });
   });
 
   describe("Herbal Tea drug", () => {
