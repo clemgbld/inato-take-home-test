@@ -13,6 +13,9 @@ export class Drug {
       if (this.benefit < 50) {
         this.benefit = this.benefit + 1;
       }
+      if (this.expiresIn < 0) {
+        this.benefit = this.benefit + 1;
+      }
     } else if (this.name === "Fervex") {
       if (this.expiresIn < 0) {
         this.benefit = 0;
@@ -43,10 +46,6 @@ export class Drug {
               this.benefit = this.benefit - 1;
             }
           }
-        }
-      } else {
-        if (this.benefit < 50) {
-          this.benefit = this.benefit + 1;
         }
       }
     }
