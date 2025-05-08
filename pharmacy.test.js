@@ -64,4 +64,12 @@ describe("Pharmacy", () => {
       ).toEqual([new Drug("Magic Pill", 10, 12)]);
     });
   });
+
+  describe("Fervex drug", () => {
+    it("should increase in benefit the older it gets", () => {
+      expect(
+        new Pharmacy([new Drug("Fervex", 12, 3)]).updateBenefitValue(),
+      ).toEqual([new Drug("Fervex", 11, 4)]);
+    });
+  });
 });
