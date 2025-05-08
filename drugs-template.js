@@ -67,7 +67,7 @@ class FervexTemplate extends DrugTemplate {
 }
 
 class DafalganTemplate extends DrugTemplate {
-  updateBenefit() {
+  _updateBenefit() {
     this.benefit = this.benefit - 2;
   }
 }
