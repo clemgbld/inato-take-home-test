@@ -26,6 +26,9 @@ export class Drug {
 }
 
 class DrugTemplate {
+  MINUMUM_BENEFIT = 0;
+  MAXIMUM_BENEFIT = 50;
+  EXPIRED = 0;
   constructor(expiresIn, benefit) {
     this.expiresIn = expiresIn;
     this.benefit = benefit;
@@ -35,13 +38,13 @@ class DrugTemplate {
     this.expiresIn = this.expiresIn - 1;
   }
   updateBenefit() {
-    if (this.benefit > 0) {
+    if (this.benefit > this.MINUMUM_BENEFIT) {
       this.benefit = this.benefit - 1;
     }
   }
 
   updateBenefitWhenExpired() {
-    if (this.expiresIn < 0) {
+    if (this.expiresIn < this.EXPIRED) {
       this._updateBenefitWhenExpired();
     }
   }
@@ -53,7 +56,7 @@ class DrugTemplate {
 
 class HerbalTeaTemplate extends DrugTemplate {
   updateBenefit() {
-    if (this.benefit < 50) {
+    if (this.benefit < this.MAXIMUM_BENEFIT) {
       this.benefit = this.benefit + 1;
     }
   }
@@ -71,7 +74,7 @@ class MagicPillTemplate extends DrugTemplate {
 
 class FervexTemplate extends DrugTemplate {
   updateBenefit() {
-    if (this.benefit === 50) return;
+    if (this.benefit === this.MAXIMUM_BENEFIT) return;
     this.benefit = this.benefit + 1;
     if (this.expiresIn < 10) {
       this.benefit = this.benefit + 1;
