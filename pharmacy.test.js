@@ -155,6 +155,14 @@ describe("Pharmacy", () => {
         ).toEqual([new Drug(DRUG_NAMES.DAFALGAN, nextExpiresIn, 0)]);
       },
     );
+
+    it("should update the benefit when negative when expired", () => {
+      expect(
+        new Pharmacy([
+          new Drug(DRUG_NAMES.DAFALGAN, -1, 0),
+        ]).updateBenefitValue(),
+      ).toEqual([new Drug(DRUG_NAMES.DAFALGAN, -2, 0)]);
+    });
   });
 
   it("should do nothing when there is no drug in the pharmacy", () => {

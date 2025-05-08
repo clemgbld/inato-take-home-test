@@ -70,6 +70,15 @@ class DafalganTemplate extends DrugTemplate {
   _updateBenefit() {
     this.benefit = this.benefit - 2;
   }
+
+  _updateBenefitWhenExpired() {
+    if (
+      this.benefit > this.MINIUMUM_BENEFIT &&
+      this.benefit < this.MAXIMUM_BENEFIT
+    ) {
+      this.benefit = this.benefit - 1;
+    }
+  }
 }
 
 export const DRUG_NAMES = {
