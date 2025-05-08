@@ -28,25 +28,14 @@ export class Drug {
           this.benefit = this.benefit + 1;
         }
       }
-    }
-
-    if (this.name != "Herbal Tea" && this.name != "Fervex") {
+    } else if (this.name === "Magic Pill") {
+    } else {
       if (this.benefit > 0) {
-        if (this.name != "Magic Pill") {
-          this.benefit = this.benefit - 1;
-        }
+        this.benefit = this.benefit - 1;
       }
-    }
 
-    if (this.expiresIn < 0) {
-      if (this.name != "Herbal Tea") {
-        if (this.name != "Fervex") {
-          if (this.benefit > 0) {
-            if (this.name != "Magic Pill") {
-              this.benefit = this.benefit - 1;
-            }
-          }
-        }
+      if (this.expiresIn < 0) {
+        this.benefit = this.benefit - 1;
       }
     }
   }
