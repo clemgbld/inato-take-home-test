@@ -4,6 +4,12 @@ export class Drug {
     this.expiresIn = expiresIn;
     this.benefit = benefit;
   }
+
+  updateDaily() {
+    if (this.name != "Magic Pill") {
+      this.expiresIn = this.expiresIn - 1;
+    }
+  }
 }
 
 export class Pharmacy {
@@ -38,9 +44,7 @@ export class Pharmacy {
           }
         }
       }
-      if (this.drugs[i].name != "Magic Pill") {
-        this.drugs[i].expiresIn = this.drugs[i].expiresIn - 1;
-      }
+      this.drugs[i].updateDaily();
       if (this.drugs[i].expiresIn < 0) {
         if (this.drugs[i].name != "Herbal Tea") {
           if (this.drugs[i].name != "Fervex") {
